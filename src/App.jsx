@@ -34,18 +34,6 @@ function useReveal() {
   return [ref, style];
 }
 
-function PhoneFrame({ children }) {
-  return (
-    <div style={{ width: '100%', height: '100%', borderRadius: 44, border: '10px solid #1A1A1A', background: '#1A1A1A', boxShadow: '0 40px 80px -20px rgba(26,26,26,0.35)', position: 'relative', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: 120, height: 24, background: '#1A1A1A', borderBottomLeftRadius: 16, borderBottomRightRadius: 16, zIndex: 3 }} />
-      <div style={{ width: '100%', height: '100%', borderRadius: 34, overflow: 'hidden', position: 'relative' }}>
-        {children}
-      </div>
-      <div style={{ position: 'absolute', bottom: 8, left: '50%', transform: 'translateX(-50%)', width: 120, height: 5, borderRadius: 3, background: 'rgba(255,255,255,0.8)', zIndex: 3 }} />
-    </div>
-  );
-}
-
 const problemCards = [
   { num: '01', title: 'Unreliable accessibility information', desc: 'Listings go stale the moment a ramp is removed or an elevator breaks down, leaving travelers with information they can no longer trust.' },
   { num: '02', title: 'Unexpected barriers', desc: 'Stairs, blocked curb cuts and closed elevators appear with no warning, turning a planned route into a dead end.' },
@@ -74,18 +62,107 @@ const journeySteps = [
   { n: '04', title: 'Improve accessibility', desc: 'Help make the next journey easier for everyone.', showLine: true }
 ];
 
-const floatAnim1 = ENABLE_MOTION ? 'floatY 6s ease-in-out infinite' : 'none';
-const floatAnim2 = ENABLE_MOTION ? 'floatY 7s ease-in-out infinite 1s' : 'none';
-const floatAnim3 = ENABLE_MOTION ? 'floatY 5.5s ease-in-out infinite .5s' : 'none';
-const blobAnim = ENABLE_MOTION ? 'blobDrift 18s ease-in-out infinite' : 'none';
-const navBg = NAV_GLASS ? 'rgba(250,250,250,0.72)' : '#FAFAFA';
-const navBackdrop = NAV_GLASS ? 'blur(16px) saturate(180%)' : 'none';
-
 function PlaceholderSlot({ label, style }) {
   return (
     <div style={{ width: '100%', height: '100%', borderRadius: 10, background: 'repeating-linear-gradient(45deg, #EFEDE8, #EFEDE8 10px, #E5E2DB 10px, #E5E2DB 20px)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'monospace', fontSize: 11, color: 'rgba(26,26,26,0.4)', textAlign: 'center', padding: 8, ...style }}>
       {label}
     </div>
+  );
+}
+
+const navLinks = [
+  { href: '#solution', label: 'Solution' },
+  { href: '#research', label: 'Research' },
+  { href: '#recognition', label: 'Impact' },
+  { href: '#future', label: 'About' }
+];
+
+function Navigation() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  return (
+    <header className={`site-nav${NAV_GLASS ? ' site-nav--glass' : ''}`}>
+      <div className="site-nav__inner">
+        <a className="site-nav__brand" href="#" aria-label="Adappta home">
+          <img src="/logo.svg" alt="Adappta" />
+        </a>
+        <nav className="site-nav__links" aria-label="Primary navigation">
+          {navLinks.map((link) => (
+            <a className="nav-link" href={link.href} key={link.href}>{link.label}</a>
+          ))}
+        </nav>
+        <div className="site-nav__actions">
+          <a className="btn-cta-nav" href="#final-cta">Partner with us</a>
+          <button
+            className="site-nav__toggle"
+            type="button"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <span />
+            <span />
+          </button>
+        </div>
+      </div>
+      <nav
+        className={`site-nav__mobile${menuOpen ? ' is-open' : ''}`}
+        id="mobile-navigation"
+        aria-label="Mobile navigation"
+      >
+        {navLinks.map((link) => (
+          <a className="nav-link" href={link.href} key={link.href} onClick={() => setMenuOpen(false)}>{link.label}</a>
+        ))}
+      </nav>
+    </header>
+  );
+}
+
+function Hero() {
+  return (
+    <section className={`hero${ENABLE_MOTION ? '' : ' hero--static'}`}>
+      <div className="hero__light hero__light--one" />
+      <div className="hero__light hero__light--two" />
+      <div className="hero__grid">
+        <div className="hero__copy">
+          <div className="hero__eyebrow">
+            <span aria-hidden="true" />
+            Accessibility-first navigation
+          </div>
+          <h1>Move through cities with confidence.</h1>
+          <p>Adappta brings trusted accessibility information and community-powered updates into one navigation platform—so every journey starts with clarity.</p>
+          <div className="hero__actions">
+            <a className="btn-primary" href="#final-cta">Partner with Adappta</a>
+            <a className="btn-secondary" href="https://www.youtube.com/watch?v=zvb9JSBsYEg&t=9s" target="_blank" rel="noopener noreferrer">
+              <span className="play-icon" aria-hidden="true" />
+              Watch the project film
+            </a>
+          </div>
+          <div className="hero__trust">
+            <span>Research-led</span>
+            <span>Community-verified</span>
+            <span>Designed for independence</span>
+          </div>
+        </div>
+
+        <div className="hero__visual" aria-label="Adappta mobile navigation experience">
+          <div className="hero__orbit hero__orbit--outer" />
+          <div className="hero__orbit hero__orbit--inner" />
+          <div className="hero__phone-wrap">
+            <div className="hero__phone">
+              <img src="/assets/hero-phone.png" alt="Adappta map and accessible route preview" />
+            </div>
+          </div>
+          <div className="hero__float hero__float--warning">
+            <img src="/assets/badge-liveupdate.png" alt="Live accessibility warning near Picoas" />
+          </div>
+          <div className="hero__float hero__float--verified">
+            <img src="/assets/badge-verified.png" alt="Adappta verified accessibility update" />
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -101,60 +178,8 @@ export default function App() {
   return (
     <div style={{ fontFamily: "'Inter',system-ui,sans-serif", color: '#1A1A1A', background: '#FAFAFA', overflowX: 'hidden', position: 'relative' }}>
 
-      {/* NAV */}
-      <div style={{ position: 'sticky', top: 0, zIndex: 50, background: navBg, backdropFilter: navBackdrop, WebkitBackdropFilter: navBackdrop, borderBottom: '1px solid rgba(26,26,26,0.06)' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '20px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <img src="/logo.svg" alt="Adappta" style={{ width: 120, height: 'auto' }} />
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 36, flexWrap: 'wrap' }}>
-            <a className="nav-link" href="#solution">Solution</a>
-            <a className="nav-link" href="#research">Research</a>
-            <a className="nav-link" href="#recognition">Impact</a>
-            <a className="nav-link" href="#future">About</a>
-          </div>
-          <a className="btn-cta-nav" href="#final-cta">Partner with us</a>
-        </div>
-      </div>
-
-      {/* HERO */}
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '96px 32px 120px', position: 'relative' }}>
-        <div style={{ position: 'absolute', top: -120, right: -160, width: 520, height: 520, borderRadius: '50%', background: 'radial-gradient(circle, rgba(115,95,255,0.22), rgba(190,220,244,0.10) 60%, transparent 75%)', filter: 'blur(20px)', animation: blobAnim, pointerEvents: 'none' }} />
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 64, alignItems: 'center' }}>
-          <div style={{ flex: '1 1 480px', minWidth: 320, position: 'relative', zIndex: 1 }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 16px', borderRadius: 100, background: 'rgba(115,95,255,0.08)', border: '1px solid rgba(115,95,255,0.18)', marginBottom: 28, animation: 'heroFade 0.9s ease both' }}>
-              <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#735FFF' }} />
-              <span style={{ fontSize: 13, fontWeight: 600, color: '#7C55A2' }}>Accessibility-first navigation</span>
-            </div>
-            <h1 style={{ fontSize: 'clamp(42px,6vw,80px)', lineHeight: 1.03, fontWeight: 800, letterSpacing: '-0.03em', margin: '0 0 28px', animation: 'heroFade 1s ease 0.05s both' }}>Move through cities with confidence.</h1>
-            <p style={{ fontSize: 'clamp(17px,1.6vw,20px)', lineHeight: 1.6, color: 'rgba(26,26,26,0.65)', maxWidth: 520, margin: '0 0 40px', animation: 'heroFade 1s ease 0.1s both' }}>Adappta is an accessibility-first navigation platform helping people navigate cities through trusted accessibility information and community-powered updates.</p>
-            <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', animation: 'heroFade 1s ease 0.15s both' }}>
-              <a className="btn-primary" href="#final-cta">Partner with Adappta</a>
-              <a className="btn-secondary" href="https://www.youtube.com/watch?v=zvb9JSBsYEg&t=9s" target="_blank" rel="noopener noreferrer">
-                <div style={{ width: 0, height: 0, borderTop: '6px solid transparent', borderBottom: '6px solid transparent', borderLeft: '9px solid #1A1A1A' }} />
-                Watch the project film
-              </a>
-            </div>
-          </div>
-          <div style={{ flex: '1 1 380px', minWidth: 300, display: 'flex', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
-            <div style={{ position: 'relative', width: 'min(320px,80vw)', aspectRatio: '390/844' }}>
-              <div style={{ position: 'absolute', top: -8, left: -84, width: 220, padding: 8, borderRadius: 14, background: '#fff', boxShadow: '0 20px 40px -16px rgba(26,26,26,0.18)', animation: floatAnim1, zIndex: 2, overflow: 'hidden' }}>
-                <img src="/assets/badge-liveupdate.png" alt="Warnings near you — Picoas, elevator out of service" style={{ display: 'block', width: '100%', borderRadius: 8 }} />
-              </div>
-              <div style={{ position: 'absolute', bottom: 64, right: -56, width: 170, padding: '14px 16px', borderRadius: 16, background: '#fff', boxShadow: '0 20px 40px -16px rgba(26,26,26,0.18)', animation: floatAnim2, zIndex: 2 }}>
-                <div style={{ fontSize: 22, fontWeight: 800, letterSpacing: '-0.02em', color: '#735FFF' }}>128</div>
-                <div style={{ fontSize: 12, color: 'rgba(26,26,26,0.55)', fontWeight: 500 }}>accessible routes nearby</div>
-              </div>
-              <div style={{ position: 'absolute', top: 270, left: -60, width: 190, padding: 8, borderRadius: 14, background: '#fff', boxShadow: '0 20px 40px -16px rgba(26,26,26,0.3)', animation: floatAnim3, zIndex: 2, overflow: 'hidden' }}>
-                <img src="/assets/badge-verified.png" alt="Adappta certified" style={{ display: 'block', width: '100%', borderRadius: 8 }} />
-              </div>
-              <PhoneFrame>
-                <img src="/assets/hero-phone.png" alt="App screen — map & route preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </PhoneFrame>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Navigation />
+      <Hero />
 
       {/* PROBLEM */}
       <div style={{ padding: '40px 32px 60px' }}>
