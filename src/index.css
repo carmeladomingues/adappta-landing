@@ -1,0 +1,28 @@
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #FAFAFA; -webkit-font-smoothing: antialiased; font-family: 'Inter', system-ui, sans-serif; color: #1A1A1A; }
+* { box-sizing: border-box; }
+
+@keyframes floatY { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-14px); } }
+@keyframes blobDrift { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(20px,-24px) scale(1.06); } }
+@keyframes heroFade { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+
+a { color: #735FFF; }
+a:hover { color: #7C55A2; }
+
+.nav-link { color: #1A1A1A; text-decoration: none; font-size: 15px; font-weight: 500; opacity: 0.75; transition: opacity 0.2s ease; }
+.nav-link:hover { opacity: 1; }
+
+.btn-primary { text-decoration: none; padding: 17px 32px; border-radius: 100px; background: linear-gradient(135deg,#735FFF 0%,#7C55A2 100%); color: #fff; font-size: 15px; font-weight: 600; box-shadow: 0 12px 30px -8px rgba(115,95,255,0.5); transition: transform 0.25s ease, box-shadow 0.25s ease; display: inline-block; }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 18px 36px -8px rgba(115,95,255,0.6); }
+
+.btn-secondary { text-decoration: none; padding: 17px 30px; border-radius: 100px; border: 1.5px solid rgba(26,26,26,0.15); color: #1A1A1A; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 10px; transition: border-color 0.25s ease, background 0.25s ease; }
+.btn-secondary:hover { border-color: rgba(26,26,26,0.35); background: rgba(26,26,26,0.03); }
+
+.btn-cta-nav { text-decoration: none; padding: 12px 24px; border-radius: 100px; background: #1A1A1A; color: #FAFAFA; font-size: 14px; font-weight: 600; transition: transform 0.25s ease, opacity 0.25s ease; display: inline-block; }
+.btn-cta-nav:hover { transform: translateY(-2px); opacity: 0.88; }
+
+.footer-link { color: rgba(26,26,26,0.6); text-decoration: none; transition: color 0.2s ease; }
+.footer-link:hover { color: #1A1A1A; }
+
+.problem-card, .stat-card { transition: transform 0.35s ease, box-shadow 0.35s ease; }
+.problem-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -12px rgba(26,26,26,0.12); }
